@@ -2,6 +2,9 @@ package Lab1;
 
 import java.security.InvalidParameterException;
 
+/**
+ * @author Junya Ishibuchi
+ */
 public class Model {
     public static final int INCHES_PER_FOOT = 12;
     public static final double POUNDS_PER_KG = 2.2046;
