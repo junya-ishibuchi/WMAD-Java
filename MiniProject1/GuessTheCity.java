@@ -30,7 +30,7 @@ public class GuessTheCity {
             throw new Exception("You can't guess anymore.");
         }
 
-        if (letter.length() > 1) {
+        if (letter.length() != 1) {
             return;
         }
 
