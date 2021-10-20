@@ -1,9 +1,12 @@
 package MiniProject1;
 
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class GuessTheCity {
     private final int MAX_GUESS_COUNT = 10;
+    private final String CHEAT_CODE = "plz tell me the answer!";
 
     private final String city;
     private StringBuilder maskedCity;
@@ -25,7 +28,19 @@ public class GuessTheCity {
         this.maskedCity = sb;
     }
 
-    public void guess(String letter) throws Exception {
+    private boolean canGuess() {
+        return !this.isGameOver() && !this.isGameClear();
+    }
+
+    private boolean isGameOver() {
+        return this.guessedCount >= this.MAX_GUESS_COUNT;
+    }
+
+    private boolean isGameClear() {
+        return this.city.equals(this.maskedCity.toString());
+    }
+
+    private void guess(String letter) throws Exception {
         if (this.guessedCount >= this.MAX_GUESS_COUNT) {
             throw new Exception("You can't guess anymore.");
         }
@@ -45,31 +60,41 @@ public class GuessTheCity {
         this.maskedCity.setCharAt(index, letter.charAt(0));
     }
 
-    public boolean canGuess() {
-        return !this.isGameOver() && !this.isGameClear();
+    private boolean isCheatCode(String code) {
+        return Objects.equals(code, CHEAT_CODE);
     }
 
-    public boolean isGameOver() {
-        return this.guessedCount >= this.MAX_GUESS_COUNT;
-    }
+    public void startGame() throws Exception {
+        Scanner scanner = new Scanner(System.in);
 
-    public boolean isGameClear() {
-        return this.city.equals(this.maskedCity.toString());
-    }
+        System.out.println("Here's the question.");
+        System.out.println(this.maskedCity.toString());
+        while (this.canGuess()) {
+            System.out.print("Guess a letter: ");
+            String letter = scanner.nextLine();
+            if (this.isCheatCode(letter)) {
+                System.out.println();
+                System.out.println("Psst! The answer: " + this.city);
+                System.out.println();
+            }
+            this.guess(letter);
 
-    public String getCity() {
-        return city;
-    }
+            System.out.println("You are guessing: " + this.maskedCity.toString());
+            System.out.print("You have guessed (" + this.guessedCount + ")");
+            System.out.println(
+                    " wrong letters: "
+                            + (this.wrongLetters.size() > 0 ? String.join(" ", this.wrongLetters) : "")
+            );
+        }
 
-    public StringBuilder getMaskedCity() {
-        return maskedCity;
-    }
+        if (this.isGameClear()) {
+            System.out.println("You win!");
+            System.out.println("You have guessed '" + this.city + "' correctly.");
+        }
 
-    public int getGuessedCount() {
-        return guessedCount;
-    }
-
-    public ArrayList<String> getWrongLetters() {
-        return this.wrongLetters;
+        if (this.isGameOver()) {
+            System.out.println("You lose!");
+            System.out.println("The correct word was'" + this.city + "'!");
+        }
     }
 }
