@@ -20,7 +20,7 @@ public class Driver {
         GuessTheCity guessTheCity = new GuessTheCity(cities.get(index));
 
         System.out.println("Here's the question.");
-        System.out.println("_________");
+        System.out.println(guessTheCity.getMaskedCity().toString());
         while (guessTheCity.canGuess()) {
             System.out.print("Guess a letter: ");
             String letter = scanner.nextLine();
