@@ -52,6 +52,9 @@ public class GuessTheCity {
         int indexOfMaskedLetters = this.maskedCity.indexOf(letter);
         int index = this.city.indexOf(letter, Math.max(indexOfMaskedLetters + 1, 0));
         if (index < 0) {
+            if (indexOfMaskedLetters >= 0) {
+                return;
+            }
             this.wrongLetters.add(letter);
             this.guessedCount++;
             return;
