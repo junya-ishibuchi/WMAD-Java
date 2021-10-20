@@ -14,8 +14,8 @@ public class Driver {
         Path file = Paths.get("src/MiniProject1/cities.txt");
         List<String> cities = Files.readAllLines(file);
 
-        Random rnd = new Random();
-        int index = rnd.nextInt(cities.size());
+        Random random = new Random();
+        int index = random.nextInt(cities.size());
 
         GuessTheCity guessTheCity = new GuessTheCity(cities.get(index));
 
